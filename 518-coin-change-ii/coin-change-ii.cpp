@@ -1,20 +1,18 @@
-vector<vector<int>> dp;
-int fun(int i, vector<int>& coin, int amount){
-    if(amount==0) return 1;
-    if(i==coin.size()) return 0;
-    if(dp[i][amount]!=-1) return dp[i][amount];
-    int take=0;
-    if(coin[i]<=amount){
-        take = fun(i,coin,amount-coin[i]);
-    }
-    int notTake = fun(i+1,coin,amount);
-    return dp[i][amount] = take + notTake;
+int dp[302][5002];
+int fun(int i,vector<int>&nums,int s,int k){
+    if(s==k) return 1;
+    if(s>k || i>=nums.size()) return 0;
+    if(dp[i][s]!=-1) 
+        return dp[i][s];
+
+    int a=fun(i,nums,s+nums[i],k);
+    int b=fun(i+1,nums,s,k);
+    return dp[i][s]=a+b;
 }
 class Solution {
 public:
-    int change(int amount, vector<int>& coins) {
-        int n = coins.size();
-        dp.assign(n+1, vector<int>(amount+1,-1));
-        return fun(0,coins,amount);
+    int change(int k, vector<int>& nums) {
+        memset(dp,-1,sizeof(dp));
+        return fun(0,nums,0,k);
     }
 };
