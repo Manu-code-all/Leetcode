@@ -1,28 +1,33 @@
 int dp[501][501];
-int fun(int i,int p,int m,vector<int>&nums,int k) {
-        if(i>=nums.size())return 0;
-        
-        int len=i-p+1;
-        if(dp[i][p]!=-1) return dp[i][p];
-        m=max(m,nums[i]);
-        int ans=0;
-        if(len==k){
-            int p=m*len +fun(i+1,i+1,0,nums,k);
-            ans=max(ans,p);
-        }
-        else{
-                int a=m*len +fun(i+1,i+1,0,nums,k);
-                int b=fun(i+1,p,m,nums,k);
-                ans=max(ans,a);
-                ans=max(ans,b);
-        }
-        return dp[i][p]=ans;
+
+int fun(int p,int i,vector<int>&nums,int m,int k){
+    if(i>=nums.size()) return 0;
+
+    int ans=0;
+
+    if(dp[i][p]!=-1) return dp[i][p];
+
+    m=max(m,nums[i]);
+    int len=i-p+1;
+
+    if(len==k){
+        int c1= (m*len)+fun(i+1,i+1,nums,0,k);
+        ans=max(ans,c1);
+    }else{
+        int c1= (m*len)+fun(i+1,i+1,nums,0,k);
+        int c2=fun(p,i+1,nums,m,k);
+        ans=max(ans,c1);
+        ans=max(ans,c2);
     }
+
+    return dp[i][p]=ans;
+}
+
 
 class Solution {
 public:
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        memset(dp,-1,sizeof(dp));
-        return fun(0,0,0,arr,k);
+        memset(dp,-1,sizeof(dp)); 
+        return fun(0,0,arr,0,k);
     }
 };
