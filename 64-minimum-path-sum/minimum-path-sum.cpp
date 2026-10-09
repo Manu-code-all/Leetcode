@@ -10,7 +10,7 @@ int fun(int i, int j, vector<vector<int>>& grid) {
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
+        int m = grid.size(),  n= grid[0].size();
         memset(dp, -1, sizeof(dp));
         return fun(m - 1, n - 1, grid);
     }
