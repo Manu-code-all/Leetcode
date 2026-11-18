@@ -13,8 +13,9 @@ public:
             if(x==nums){
                 return true;
             }
-                
-        return false;
+            else 
+                return false;
+        
         
     }
 };
